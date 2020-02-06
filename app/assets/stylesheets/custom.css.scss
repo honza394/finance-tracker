@@ -11,9 +11,13 @@
 }
 
 .no-right-padding {
-  padding-right: 0 !important;
+  padding-right: 1px !important;
 }
 
 .no-left-padding {
-  padding-left: 0 !important;
+  padding-left: 2px !important;
+}
+
+.result-block {
+  display: inline-block;
 }
