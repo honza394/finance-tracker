@@ -15,7 +15,7 @@
               <strong>Email: </strong> <%= friend.email %>
             </td>
             <td>
-              <strong>Profile: </strong> <%= link_to 'View Profile', '#',
+              <strong>Profile: </strong> <%= link_to 'View Profile', user_path(friend),
                     class: "btn btn-sm btn-success" %>
               <% if current_user.not_friend_with?(friend.id) %>
                 <%= link_to 'Follow friend?', friendships_path(friend: friend),
