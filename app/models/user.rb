@@ -35,19 +35,24 @@ class User < ApplicationRecord
   end
 
   def self.first_name_matches(param)
-    matches('first_name', params)
+    matches('first_name', param)
   end
 
   def self.last_name_matches(param)
-    matches('last_name', params)
+    matches('last_name', param)
   end
 
-  def self.email_matches(params)
-    matches('email', params)
+  def self.email_matches(param)
+    matches('email', param)
   end
 
 
   def self.matches(field_name, param)
     where("#{field_name} like ?", "%#{param}%")
   end
+
+  def except_current_user(users)
+    users.reject { |user| user.id == self.id }
+  end
+
 end
