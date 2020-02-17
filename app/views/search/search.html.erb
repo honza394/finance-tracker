@@ -1,0 +1,16 @@
+search: <%= @to_search %>
+
+<h3>Results in Users</h3>
+
+<% if !@friends.empty? %>
+  <%= render 'users/friend_result' %>
+<% else %>
+  <p>No match in Users</p>
+<% end %>
+
+<h3>Results in tracked Stocks</h3>
+<% if !@stocks.empty? %>
+  <%= render 'stocks' %>
+<% else %>
+  <p>No match in tracked Stocks</p>
+<% end %>

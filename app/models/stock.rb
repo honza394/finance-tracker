@@ -20,4 +20,23 @@ class Stock < ApplicationRecord
     where(ticker: ticker_symbol).first
   end
 
+  def self.search(param)
+    param.strip!
+    to_send_back = (ticker_matches(param) + name_matches(param)).uniq
+    return nil unless to_send_back
+    to_send_back
+  end
+
+  def self.ticker_matches(param)
+    matches('ticker', param)
+  end
+
+  def self.name_matches(param)
+    matches('name', param)
+  end
+
+  def self.matches(field_name, param)
+    where("#{field_name} like ?", "%#{param}%")
+  end
+
 end
