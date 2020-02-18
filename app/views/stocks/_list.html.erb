@@ -6,16 +6,33 @@
           <th scope="col">Ticker</th>
           <th scope="col">Name</th>
           <th scope="col">Price</th>
+          <th scope="col">Trend</th>
+          <th scope="col">Before Price</th>
+          <th scope="col">
+            <% if current_user.id == @user.id %>
+              <%= link_to "Update Prices", my_portfolio_update_path, class: "btn btn-sm btn-secondary" %>
+            <% end %>
+          </th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
         <% @tracked_stocks.each do |stock| %>
           <tr>
-            <th scope="row"><%= stock.ticker %></th>
-            <td><%= stock.name %></td>
-            <td><%= stock.last_price %></td>
-            <td>
+            <th scope="row" class="text-left"><%= stock.ticker %></th>
+            <td class="text-left"><%= stock.name %></td>
+            <td class="text-right"><%= number_with_precision(stock.last_price, precision: 2) %></td>
+            <td class="text-right">
+              <% if stock.last_price %>
+                <% stock.before_price = stock.last_price if !stock.before_price %>
+                <% trend = stock.last_price - stock.before_price %>
+                <% trend_color = trend < 0 ? "text-danger" : "text-primary" %>
+                <span class=<%= trend_color %> ><%= number_with_precision(trend, precision: 2) %></span>
+              <% end %>
+            </td>
+            <td class="text-right"><%= number_with_precision(stock.before_price, precision: 2) %></td>
+            <td class="text-left"><%= time_ago_in_words(stock.updated_at) %> ago</td>
+            <td class="text-left">
               <% if current_user.can_track_stock(stock.ticker) %>
                 <%= link_to 'Add to portfolio', user_stocks_path(user: current_user, ticker: stock.ticker),
                     class: "btn btn-success", method: :post %>
