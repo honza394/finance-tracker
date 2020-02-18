@@ -6,16 +6,6 @@ class SearchController < ApplicationController
 
       @friends = User.search(params[:to_search])
       @friends = current_user.except_current_user(@friends)
-      # if @friends
-      #   respond_to do |format|
-      #     format.html
-      #   end
-      # else
-      #   respond_to do |format|
-      #     flash[:notice] = "No match in users"
-      #     format.html
-      #   end
-      # end
 
       @stocks = Stock.search(params[:to_search])
 
